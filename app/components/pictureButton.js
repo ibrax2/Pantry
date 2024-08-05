@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useRef } from "react";
 import {
   Button,
@@ -13,11 +14,10 @@ import { styled } from "@mui/system";
 import { Camera } from "react-camera-pro";
 import Tesseract from 'tesseract.js';  // Import Tesseract.js for OCR
 import { OpenAI } from "openai";
-import * as dotenv from "dotenv";
 import { addItem, getTableItems } from "./table";
 
 // Load environment variables from .env file
-dotenv.config();
+
 
 const ImageButton = styled(Button)({
   width: "200px",
@@ -121,10 +121,7 @@ export default function Pic() {
       console.log("Chat completion result:", chatCompletion);
 
       //add item to table
-      let result= chatCompletion.choices[0].message.content.split;
-
-      const item= result[0];
-      const location= result[1];
+      const [item, location] = chatCompletion.choices[0].message.content.split(" ");
 
       const handleAddItem = async () => {
         if (item.trim()) {
